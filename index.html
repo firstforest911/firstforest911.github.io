@@ -251,7 +251,7 @@
     </style>
 <base target="_blank">
 </head>
-<body>
+<body oncontextmenu="return false" onkeydown="return blockKeys(event)" onload="initProtect()">
     <div class="glass-card">
         <div class="header">
             <div class="avatar">🌲</div>
@@ -318,5 +318,68 @@
             © 2026 初林官方 · 保留所有权利
         </div>
     </div>
+
+    <script>
+        // 1. 禁用右键菜单
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // 2. 禁用查看源码的快捷键
+        function blockKeys(e) {
+            // 禁用F12（开发者工具）
+            if (e.keyCode === 123) return false;
+            // 禁用Ctrl+U（查看页面源码）
+            if (e.ctrlKey && e.keyCode === 85) return false;
+            // 禁用Ctrl+Shift+I（开发者工具）
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) return false;
+            // 禁用Ctrl+Shift+J（开发者工具控制台）
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) return false;
+            // 禁用Ctrl+Shift+C（选取元素）
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) return false;
+            // 禁用Alt+V（部分浏览器的查看菜单）
+            if (e.altKey && e.keyCode === 86) return false;
+            return true;
+        }
+
+        // 3. 检测开发者工具并干扰
+        function initProtect() {
+            // 检测开发者工具是否打开
+            const devtoolsDetector = () => {
+                const threshold = 160;
+                const width = window.outerWidth - window.innerWidth > threshold;
+                const height = window.outerHeight - window.innerHeight > threshold;
+                
+                if (width || height) {
+                    // 开发者工具打开时的干扰措施
+                    document.body.style.display = 'none';
+                    alert('检测到非法调试行为，页面已暂停显示！');
+                    // 刷新页面（可选）
+                    // location.reload();
+                } else {
+                    document.body.style.display = 'flex';
+                }
+            };
+
+            // 定时检测
+            setInterval(devtoolsDetector, 1000);
+            
+            // 额外防护：禁止复制文本
+            document.addEventListener('copy', e => {
+                e.preventDefault();
+                alert('禁止复制页面内容！');
+            });
+
+            // 4. 混淆DOM结构（简单版）
+            const obfuscateDOM = () => {
+                // 给关键元素添加随机属性，干扰源码阅读
+                const elements = document.querySelectorAll('div, a, span, h1');
+                elements.forEach(el => {
+                    const randomAttr = 'data-' + Math.random().toString(36).substr(2, 9);
+                    el.setAttribute(randomAttr, Math.random().toString(36));
+                });
+            };
+            
+            obfuscateDOM();
+        }
+    </script>
 </body>
 </html>
