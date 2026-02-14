@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初林官方导航页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .contact-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-section:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .contact-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .email-display {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .email-icon {
+            font-size: 18px;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 18px 24px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-button:hover::before {
+            left: 100%;
+        }
+
+        .link-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .link-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: transform 0.3s ease;
+        }
+
+        .link-button:hover .link-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .link-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .link-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .link-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .arrow {
+            font-size: 20px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .link-button:hover .arrow {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        /* QQ群特殊样式 */
+        .link-button.qq-group {
+            background: linear-gradient(135deg, rgba(18, 183, 245, 0.2), rgba(18, 183, 245, 0.1));
+            border-color: rgba(18, 183, 245, 0.3);
+        }
+
+        .link-button.qq-group:hover {
+            background: linear-gradient(135deg, rgba(18, 183, 245, 0.3), rgba(18, 183, 245, 0.2));
+            box-shadow: 0 10px 30px rgba(18, 183, 245, 0.3);
+        }
+
+        .link-button.qq-group .link-icon {
+            background: rgba(18, 183, 245, 0.25);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="glass-card">
+        <div class="header">
+            <div class="avatar">🌲</div>
+            <h1>初林官方</h1>
+            <div class="subtitle">First Forest Official</div>
+        </div>
+
+        <div class="contact-section">
+            <div class="contact-label">联系我们</div>
+            <div class="email-display">
+                <span class="email-icon">✉️</span>
+                <span>firstforest@qwyhgf.com</span>
+            </div>
+        </div>
+
+        <div class="links-container">
+            <a href="https://qm.qq.com/q/5e3uW3MXgI" class="link-button qq-group" target="_blank">
+                <div class="link-content">
+                    <div class="link-icon">👥</div>
+                    <div class="link-text">
+                        <span class="link-title">官方交流群</span>
+                        <span class="link-desc">QQ群即时沟通 · 点击加入</span>
+                    </div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="https://qwyhgf.com/" class="link-button" target="_blank">
+                <div class="link-content">
+                    <div class="link-icon">📧</div>
+                    <div class="link-text">
+                        <span class="link-title">初林邮箱</span>
+                        <span class="link-desc">企业邮件服务系统</span>
+                    </div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="https://public.firstforest.top/" class="link-button" target="_blank">
+                <div class="link-content">
+                    <div class="link-icon">🖥️</div>
+                    <div class="link-text">
+                        <span class="link-title">初林公益主机</span>
+                        <span class="link-desc">免费主机服务平台</span>
+                    </div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            © 2024 初林官方 · 保留所有权利
+        </div>
+    </div>
+</body>
+</html>
